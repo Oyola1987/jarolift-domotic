@@ -1,0 +1,1 @@
+# jarolift-domotic
