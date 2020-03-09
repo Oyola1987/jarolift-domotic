@@ -1,4 +1,4 @@
-package com.jarolift.domotic.controllers;
+package com.jarolift.domotic.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

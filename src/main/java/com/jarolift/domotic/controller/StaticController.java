@@ -1,4 +1,4 @@
-package com.jarolift.domotic.controllers;
+package com.jarolift.domotic.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

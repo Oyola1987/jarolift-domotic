@@ -1,4 +1,4 @@
-package com.jarolift.domotic.controllers;
+package com.jarolift.domotic.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
