@@ -1,6 +1,13 @@
-const getChannel = () => {
-    return document.querySelector('#combo-remotes').value;
-};
+const CACHE_KEY = 'previous-option';
+
+const comboEl = document.querySelector('#combo-remotes');
+const getChannel = () => comboEl.value;
+
+const setCache = () => localStorage.setItem(CACHE_KEY, getChannel());
+
+const getCache = () => localStorage.getItem(CACHE_KEY) || 0;
+
+const selector = (sel) => document.querySelector(`.${sel}`);
 
 const get = (url) => {
     return fetch(url)
@@ -8,38 +15,36 @@ const get = (url) => {
             console.log(response.url);
             return response.json()
         })
-        .then((data) => {
-            console.log(data);
-        });
+        .then((data) => console.log(data));
 };
 
 
 const listener = (clsSelector) => {
-    const el = document.querySelector(`.${clsSelector}`);
-    const mouseCall = (event, btn) => {
-        get(`/api/event/${event}/button/${btn}/channel/${getChannel()}`);
+    const el = selector(clsSelector);
+    const mouseCall = (event) => {
+        get(`/api/event/${event}/button/${clsSelector}/channel/${getChannel()}`);
     };
 
-    const cb = () => {
-        mouseCall("up", clsSelector);
+    const upCb = () => {
+        el.removeEventListener('mouseup', upCb);
+        el.removeEventListener('mouseleave', upCb);
+        mouseCall("up");
     };
     
     el.addEventListener('mousedown', () => {
-        mouseCall("down", clsSelector);
-        el.addEventListener('mouseleave', cb);
-    });
-
-    el.addEventListener('mouseup', () => {
-        el.removeEventListener('mouseleave', cb);
-        mouseCall("up", clsSelector);
-    });
-
-    // el.addEventListener('click', () => {
-    //     get(`/api/button/${clsSelector}/channel/${getChannel()}`);
-    // });
+        el.addEventListener('mouseleave', upCb);
+        el.addEventListener('mouseup', upCb);
+        mouseCall("down");        
+    });    
 };
+
+selector('middle').addEventListener('mousedown', () => {
+    get(`/api/middle/channel/${getChannel()}`);
+});
 
 listener('up');
 listener('down');
-listener('middle');
 listener('stop');
+
+comboEl.addEventListener('change', () => setCache());
+comboEl.value = getCache();

@@ -8,8 +8,9 @@ import com.pi4j.io.gpio.RaspiPin;
 
 public class SendCommand {
     public void update(RequestModel requestModel) {
-        GpioController gpioController = GpioFactory.getInstance();
+        /*GpioController gpioController = GpioFactory.getInstance();
         GpioPinDigitalOutput up = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00);
-        up.high();
+        up.high();*/
+        System.out.println(requestModel.toString());
     }
 }

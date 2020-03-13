@@ -11,8 +11,7 @@ public class RequestModel {
         this.channel = channel;
     }
 
-    public RequestModel(String button, int channel) {
-        this.button = button;
+    public RequestModel(int channel) {
         this.channel = channel;
     }
 
@@ -39,4 +38,14 @@ public class RequestModel {
     public int getChannel() {
         return channel;
     }
+
+    @Override
+    public String toString() {
+        return "RequestModel{" +
+                "event='" + event + '\'' +
+                ", button='" + button + '\'' +
+                ", channel=" + channel +
+                '}';
+    }
+
 }
