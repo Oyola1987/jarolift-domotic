@@ -1,3 +1,9 @@
+
+const setVH = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+
 const CACHE_KEY = 'previous-option';
 
 const comboEl = document.querySelector('#combo-remotes');
@@ -7,9 +13,15 @@ const setCache = () => localStorage.setItem(CACHE_KEY, getChannel());
 
 const getCache = () => localStorage.getItem(CACHE_KEY) || 0;
 
+const touchSupported = 'ontouchstart' in window;
+
+const upEvent = touchSupported ? 'touchend' : 'mouseup';
+const downEvent = touchSupported ? 'touchstart' : 'mousedown';
+
 const selector = (sel) => document.querySelector(`.${sel}`);
 
 const get = (url) => {
+    selector('dev').innerHTML = url;
     return fetch(url)
         .then(response => {
             console.log(response.url);
@@ -18,33 +30,40 @@ const get = (url) => {
         .then((data) => console.log(data));
 };
 
+const vibrate = () => window.navigator.vibrate && window.navigator.vibrate(5);
 
 const listener = (clsSelector) => {
     const el = selector(clsSelector);
+    const btnUrl = clsSelector === 'middle' ? 'middle' : `button/${clsSelector}`;
+
     const mouseCall = (event) => {
-        get(`/api/event/${event}/button/${clsSelector}/channel/${getChannel()}`);
+        get(`/api/event/${event}/${btnUrl}/channel/${getChannel()}`);
     };
 
-    const upCb = () => {
-        el.removeEventListener('mouseup', upCb);
-        el.removeEventListener('mouseleave', upCb);
+    const upCb = () => {   
+        el.className = el.className.replace(/active/g, '').trim();
+        vibrate();
+        el.removeEventListener(upEvent, upCb);
+        el.removeEventListener('mouseleave', upCb);        
         mouseCall("up");
     };
     
-    el.addEventListener('mousedown', () => {
+    el.addEventListener(downEvent, () => {  
+        el.className = `${el.className} active`;
+        vibrate();
+        el.addEventListener(upEvent, upCb);
         el.addEventListener('mouseleave', upCb);
-        el.addEventListener('mouseup', upCb);
-        mouseCall("down");        
+        mouseCall("down");
     });    
 };
-
-selector('middle').addEventListener('mousedown', () => {
-    get(`/api/middle/channel/${getChannel()}`);
-});
 
 listener('up');
 listener('down');
 listener('stop');
+listener('middle');
 
 comboEl.addEventListener('change', () => setCache());
 comboEl.value = getCache();
+
+window.addEventListener("resize", setVH);
+setVH();

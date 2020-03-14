@@ -5,6 +5,7 @@ body {
     margin: 0;
     position: fixed;
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
 }
 
@@ -82,7 +83,7 @@ select option {
 
 .remote img {
     max-width: 100%;
-    max-height: calc(100vh - 7rem);
+    max-height: calc((var(--vh, 1vh) * 100) - 7rem);
     height: auto;
 }
 
@@ -104,9 +105,10 @@ select option {
     width: 30%;
     height: 10%;
     border-radius: 15%;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.remote .btn:hover {
+.remote .btn.active {
     background: rgba(0, 0, 0, 0.4);
 }
 
@@ -116,4 +118,14 @@ select option {
 
 .remote .middle {
     margin-top: 46%;
+}
+
+.dev {
+    margin: 0;
+    padding: 0.3rem 0;
+    background: #ccc;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
 }

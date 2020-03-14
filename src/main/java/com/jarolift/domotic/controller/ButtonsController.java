@@ -5,6 +5,8 @@ import com.jarolift.domotic.service.SendCommand;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class ButtonsController {
     @GetMapping(value = "/api/event/{event}/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -13,12 +15,18 @@ public class ButtonsController {
         return execute(request);
     }
 
-    @GetMapping(value = "/api/middle/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RequestModel middleButton(@PathVariable int channel) {
+    @GetMapping(value = "/api/event/down/middle/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RequestModel downMiddleButton(@PathVariable int channel) {
         RequestModel request = new RequestModel(channel);
         return execute(request);
     }
 
+    @GetMapping(value = "/api/event/up/middle/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RequestModel upMiddleButton() {
+        RequestModel request = new RequestModel();
+        return execute(request);
+    }
+upMiddleButton
     private RequestModel execute(RequestModel requestModel) {
         SendCommand sendCommand = new SendCommand();
         sendCommand.update(requestModel);

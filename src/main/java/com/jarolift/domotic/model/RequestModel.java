@@ -11,6 +11,9 @@ public class RequestModel {
         this.channel = channel;
     }
 
+    public RequestModel() {
+    }
+
     public RequestModel(int channel) {
         this.channel = channel;
     }
