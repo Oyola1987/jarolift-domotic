@@ -11,22 +11,7 @@ public class RequestModel {
         this.channel = channel;
     }
 
-    public RequestModel() {
-    }
-
     public RequestModel(int channel) {
-        this.channel = channel;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public void setButton(String button) {
-        this.button = button;
-    }
-
-    public void setChannel(int channel) {
         this.channel = channel;
     }
 
