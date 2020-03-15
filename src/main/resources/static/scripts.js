@@ -30,22 +30,17 @@ const get = (url) => {
         .then((data) => console.log(data));
 };
 
-const vibrate = () => window.navigator.vibrate && window.navigator.vibrate(5);
+const vibrate = () => window.navigator.vibrate && window.navigator.vibrate(10);
 
 const listener = (clsSelector) => {
     const el = selector(clsSelector);
     const btnUrl = clsSelector === 'middle' ? 'middle' : `button/${clsSelector}`;
-
-    const mouseCall = (event) => {
-        get(`/api/event/${event}/${btnUrl}/channel/${getChannel()}`);
-    };
 
     const upCb = () => {   
         el.className = el.className.replace(/active/g, '').trim();
         vibrate();
         el.removeEventListener(upEvent, upCb);
         el.removeEventListener('mouseleave', upCb);        
-        mouseCall("up");
     };
     
     el.addEventListener(downEvent, () => {  
@@ -53,7 +48,7 @@ const listener = (clsSelector) => {
         vibrate();
         el.addEventListener(upEvent, upCb);
         el.addEventListener('mouseleave', upCb);
-        mouseCall("down");
+        get(`/api/${btnUrl}/channel/${getChannel()}`);
     });    
 };
 

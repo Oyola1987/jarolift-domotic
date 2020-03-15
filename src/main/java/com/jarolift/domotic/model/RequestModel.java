@@ -4,10 +4,6 @@ public class RequestModel {
     private String button;
     private int channel;
 
-    public RequestModel(int channel) {
-        this.channel = channel;
-    }
-
     public RequestModel(String button, int channel) {
         this.button = button;
         this.channel = channel;

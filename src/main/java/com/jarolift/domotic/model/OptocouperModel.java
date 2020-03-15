@@ -1,10 +1,20 @@
 package com.jarolift.domotic.model;
 
-import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.RaspiPin;
 
 import java.util.ArrayList;
 
 public class OptocouperModel {
+    public final static long LONG_PULSE = 4200;
+    public final static long SHORT_PULSE = 200;
+    public final static int MIN_CHANNEL = 1;
+    private final static int MAX_CHANNEL = 8;
+    private final static int AVAILABLE_CHANNELS = 2;
+
+    private int currentChannel = MIN_CHANNEL;
     private ArrayList<Integer> allChannels = new ArrayList<>();
     private ArrayList<GpioPinDigitalOutput> pins = new ArrayList<>();
     private GpioPinDigitalOutput pinUp;
@@ -18,16 +28,9 @@ public class OptocouperModel {
         pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01);
         pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02);
         pinChangeChannel = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-        allChannels.add(1);
-        allChannels.add(2);
-        pins.add(pinUp);
-        pins.add(pinDown);
-        pins.add(pinStop);
-        pins.add(pinChangeChannel);
-    }
-
-    public ArrayList<GpioPinDigitalOutput> getPins() {
-        return pins;
+        for (int i = 0; i <= AVAILABLE_CHANNELS; i++) {
+            allChannels.add(i);
+        }
     }
 
     public GpioPinDigitalOutput getPinChangeChannel() {
@@ -36,6 +39,10 @@ public class OptocouperModel {
 
     public GpioPinDigitalOutput getPinStop() {
         return pinStop;
+    }
+
+    public int getCurrentChannel() {
+        return currentChannel;
     }
 
     public GpioPinDigitalOutput getPinByButton(String button) {
@@ -59,5 +66,12 @@ public class OptocouperModel {
             channels.add(channel);
             return channels;
         }
+    }
+
+    public int increaseChannel() {
+        if (currentChannel == (MAX_CHANNEL + 1)) {
+            currentChannel = MIN_CHANNEL;
+        }
+        return currentChannel;
     }
 }

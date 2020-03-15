@@ -5,60 +5,49 @@ import com.jarolift.domotic.model.RequestModel;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 public class OptocouperService {
-    static private int DEFAULT_CHANNEL = 1;
     private OptocouperModel optocouperModel;
-    private int currentChannel = DEFAULT_CHANNEL;
 
     public OptocouperService() {
         optocouperModel = new OptocouperModel();
-        optocouperModel.getPins().forEach((pin) -> pin.low());
     }
 
-    public void pushed(RequestModel requestModel) {
+    public void pulseButton(RequestModel requestModel) {
         GpioPinDigitalOutput pin = optocouperModel.getPinByButton(requestModel.getButton());
 
-        optocouperModel.getArrayChannels(requestModel.getChannel()).forEach((n) -> {
-            System.out.println("Set pin to HIGH, channel: " + n + ", button: " + requestModel.getButton());
-            pin.high();
-        });
+        pulseByPin(requestModel, pin, OptocouperModel.SHORT_PULSE);
     }
 
-    public void unPushed(RequestModel requestModel) {
-        GpioPinDigitalOutput pin = optocouperModel.getPinByButton(requestModel.getButton());
-
-        optocouperModel.getArrayChannels(requestModel.getChannel()).forEach((n) -> {
-            System.out.println("Set pin to LOW, channel: " + n + ", button: " + requestModel.getButton());
-            pin.low();
-        });
-    }
-
-    public void pushedMiddle(RequestModel requestModel) {
+    public void pulseMiddle(RequestModel requestModel) {
         GpioPinDigitalOutput stopPin = optocouperModel.getPinStop();
 
-        optocouperModel.getArrayChannels(requestModel.getChannel()).forEach((n) -> {
-            System.out.println("Set pin to HIGH, channel: " + n + ", button: middle");
-            stopPin.high();
+        pulseByPin(requestModel, stopPin, OptocouperModel.LONG_PULSE);
+    }
+
+    private void pulseByPin(RequestModel requestModel, GpioPinDigitalOutput pin, long pulseTime) {
+        optocouperModel.getArrayChannels(requestModel.getChannel()).forEach((channel) -> {
+            System.out.println("[PULSE] channel: " + channel + ", button: " + requestModel.getButton());
+            selectChannel(channel);
+            pin.pulse(pulseTime);
         });
+
+        selectDefaultChannel();
     }
 
     private void selectChannel(int channel) {
-        while (currentChannel != channel) {
+        while (optocouperModel.getCurrentChannel() != channel) {
             increaseChannel();
         }
     }
 
     private void selectDefaultChannel() {
-        while (currentChannel != DEFAULT_CHANNEL) {
+        while (optocouperModel.getCurrentChannel() != OptocouperModel.MIN_CHANNEL) {
             increaseChannel();
         }
     }
 
     private void increaseChannel() {
         GpioPinDigitalOutput changePin = optocouperModel.getPinChangeChannel();
-        changePin.pulse(200);
-        currentChannel ++;
-        if (currentChannel == 9) {
-            currentChannel = DEFAULT_CHANNEL;
-        }
+        changePin.pulse(OptocouperModel.SHORT_PULSE);
+        optocouperModel.increaseChannel();
     }
 }
