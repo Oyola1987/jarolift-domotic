@@ -26,17 +26,23 @@ public class OptocouperService {
         pinChangeChannel.low();
     }
 
-    public void updateState(RequestModel requestModel) {
+    public void pushed(RequestModel requestModel) {
         GpioPinDigitalOutput pin = getPin(requestModel);
+        setChannel(requestModel);
+        pin.high();
+    }
 
-        if (requestModel.getEvent() == "down") {
-            pin.high();
-        } else {
-            pin.low();
-        }
+    public void unPushed(RequestModel requestModel) {
+        GpioPinDigitalOutput pin = getPin(requestModel);
+        setChannel(requestModel);
+        pin.low();
     }
 
     public void updateMiddle(RequestModel requestModel) {
+        setChannel(requestModel);
+    }
+
+    private void setChannel(RequestModel requestModel) {
         int channel = requestModel.getChannel();
 
     }

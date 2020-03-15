@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ButtonsController {
     private OptocouperService optocouperService = new OptocouperService();
 
-    @GetMapping(value = "/api/event/{event}/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RequestModel eupMiddleButtonventButton(@PathVariable String event, @PathVariable String button, @PathVariable int channel) {
-        RequestModel request = new RequestModel(event, button, channel);
-        optocouperService.updateState(request);
+    @GetMapping(value = "/api/event/down/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RequestModel pushButton(@PathVariable String button, @PathVariable int channel) {
+        RequestModel request = new RequestModel(button, channel);
+        optocouperService.pushed(request);
+        return request;
+    }
+
+    @GetMapping(value = "/api/event/up/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RequestModel unPushButton(@PathVariable String button, @PathVariable int channel) {
+        RequestModel request = new RequestModel(button, channel);
+        optocouperService.unPushed(request);
         return request;
     }
 
