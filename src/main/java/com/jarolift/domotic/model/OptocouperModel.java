@@ -24,11 +24,11 @@ public class OptocouperModel {
 
     public OptocouperModel() {
         GpioController gpioController = GpioFactory.getInstance();
-        pinUp = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00);
-        pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-        pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02);
-        pinChangeChannel = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-        for (int i = 0; i <= AVAILABLE_CHANNELS; i++) {
+        pinUp = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22);
+        pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_23);
+        pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24);
+        pinChangeChannel = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25);
+        for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
             allChannels.add(i);
         }
     }

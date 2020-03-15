@@ -4,6 +4,9 @@ import com.jarolift.domotic.model.OptocouperModel;
 import com.jarolift.domotic.model.RequestModel;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 public class OptocouperService {
     private OptocouperModel optocouperModel;
 
@@ -24,11 +27,13 @@ public class OptocouperService {
     }
 
     private void pulseByPin(RequestModel requestModel, GpioPinDigitalOutput pin, long pulseTime) {
-        optocouperModel.getArrayChannels(requestModel.getChannel()).forEach((channel) -> {
+        ArrayList<Integer> channels = optocouperModel.getArrayChannels(requestModel.getChannel());
+
+        for (int channel: channels) {
             System.out.println("[PULSE] channel: " + channel + ", button: " + requestModel.getButton());
             selectChannel(channel);
-            pin.pulse(pulseTime);
-        });
+            pulse(pin, pulseTime);
+        }
 
         selectDefaultChannel();
     }
@@ -47,7 +52,15 @@ public class OptocouperService {
 
     private void increaseChannel() {
         GpioPinDigitalOutput changePin = optocouperModel.getPinChangeChannel();
-        changePin.pulse(OptocouperModel.SHORT_PULSE);
+        pulse(changePin, OptocouperModel.SHORT_PULSE);
         optocouperModel.increaseChannel();
+    }
+
+    private void pulse(GpioPinDigitalOutput pin, long pulseTime) {
+        try {
+            pin.pulse(pulseTime).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }
