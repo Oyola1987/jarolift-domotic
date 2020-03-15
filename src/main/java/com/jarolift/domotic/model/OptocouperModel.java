@@ -68,10 +68,10 @@ public class OptocouperModel {
         }
     }
 
-    public int increaseChannel() {
+    public void increaseChannel() {
+        currentChannel++;
         if (currentChannel == (MAX_CHANNEL + 1)) {
             currentChannel = MIN_CHANNEL;
         }
-        return currentChannel;
     }
 }
