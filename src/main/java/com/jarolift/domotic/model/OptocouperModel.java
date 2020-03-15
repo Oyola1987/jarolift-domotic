@@ -42,15 +42,16 @@ public class OptocouperModel {
     }
 
     public int getCurrentChannel() {
+        System.out.println("[currentChannel] " + currentChannel);
         return currentChannel;
     }
 
     public GpioPinDigitalOutput getPinByButton(String button) {
-        if (button == "up"){
+        if (button.equals("up")){
             return pinUp;
-        } else if (button == "down"){
+        } else if (button.equals("down")){
             return pinDown;
-        } else if (button == "stop") {
+        } else if (button.equals("stop")) {
             return pinStop;
         }
 
