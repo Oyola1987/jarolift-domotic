@@ -28,7 +28,7 @@ public class ButtonsController {
     @GetMapping(value = "/api/event/down/middle/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RequestModel downMiddleButton(@PathVariable int channel) {
         RequestModel request = new RequestModel(channel);
-        optocouperService.updateMiddle(request);
+        optocouperService.pushedMiddle(request);
         return request;
     }
 
