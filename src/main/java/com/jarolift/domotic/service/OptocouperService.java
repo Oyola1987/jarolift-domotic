@@ -59,7 +59,7 @@ public class OptocouperService {
     private void pulse(GpioPinDigitalOutput pin, long pulseTime) {
         try {
             pin.pulse(pulseTime).get();
-            Thread.sleep(OptocouperModel.SHORT_PULSE);
+            Thread.sleep(OptocouperModel.STOP_PULSE);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

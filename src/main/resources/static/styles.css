@@ -121,6 +121,7 @@ select option {
 }
 
 .dev {
+    display: none;
     margin: 0;
     padding: 0.3rem 0;
     background: #ccc;

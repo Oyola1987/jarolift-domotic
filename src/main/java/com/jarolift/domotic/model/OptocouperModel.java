@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class OptocouperModel {
     public final static long LONG_PULSE = 4200;
-    public final static long SHORT_PULSE = 200;
+    public final static long SHORT_PULSE = 300;
+    public final static long STOP_PULSE = 500;
     public final static int MIN_CHANNEL = 1;
     private final static int MAX_CHANNEL = 8;
     private final static int AVAILABLE_CHANNELS = 2;
@@ -24,9 +25,9 @@ public class OptocouperModel {
 
     public OptocouperModel() {
         GpioController gpioController = GpioFactory.getInstance();
+        pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03);
+        pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_21);
         pinUp = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22);
-        pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_23);
-        pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24);
         pinChangeChannel = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25);
         for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
             allChannels.add(i);
