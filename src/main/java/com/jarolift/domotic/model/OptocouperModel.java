@@ -43,7 +43,6 @@ public class OptocouperModel {
     }
 
     public int getCurrentChannel() {
-        System.out.println("[currentChannel] " + currentChannel);
         return currentChannel;
     }
 
