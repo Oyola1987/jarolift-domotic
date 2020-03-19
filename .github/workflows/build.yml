@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+
     - name: Build with Maven
       run: mvn clean package -DskipTests=true
 
@@ -27,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: jarolft-jar
-        path: target/jarolift-domotic-1.0-SNAPSHOT.jar
+        path: target/jarolift-domotic-*jar
