@@ -1,33 +1,35 @@
 package com.jarolift.domotic.service;
 
-import com.jarolift.domotic.model.OptocouperModel;
-import com.jarolift.domotic.model.RequestModel;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.jarolift.domotic.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+@Component
 public class OptocouperService {
     private OptocouperModel optocouperModel;
 
-    public OptocouperService() {
-        optocouperModel = new OptocouperModel();
+    @Autowired
+    public OptocouperService(PulsableFactory pulsableFactory) {
+        optocouperModel = new OptocouperModel(pulsableFactory);
     }
 
     public void pulseButton(RequestModel requestModel) {
-        GpioPinDigitalOutput pin = optocouperModel.getPinByButton(requestModel.getButton());
+        Pulsable pin = optocouperModel.getPinByButton(requestModel.getButton());
 
         pulseByPin(requestModel, pin, OptocouperModel.SHORT_PULSE);
     }
 
     public void pulseMiddle(RequestModel requestModel) {
-        GpioPinDigitalOutput stopPin = optocouperModel.getPinStop();
+        Pulsable stopPin = optocouperModel.getPinStop();
 
         pulseByPin(requestModel, stopPin, OptocouperModel.LONG_PULSE);
     }
 
-    private void pulseByPin(RequestModel requestModel, GpioPinDigitalOutput pin, long pulseTime) {
-        ArrayList<Integer> channels = optocouperModel.getArrayChannels(requestModel.getChannel());
+    private void pulseByPin(RequestModel requestModel, Pulsable pin, long pulseTime) {
+        List<Integer> channels = optocouperModel.getArrayChannels(requestModel.getChannel());
 
         for (int channel: channels) {
             System.out.println("[PULSE] channel: " + channel + ", button: " + requestModel.getButton());
@@ -51,12 +53,12 @@ public class OptocouperService {
     }
 
     private void increaseChannel() {
-        GpioPinDigitalOutput changePin = optocouperModel.getPinChangeChannel();
+        Pulsable changePin = optocouperModel.getPinChangeChannel();
         pulse(changePin, OptocouperModel.SHORT_PULSE);
         optocouperModel.increaseChannel();
     }
 
-    private void pulse(GpioPinDigitalOutput pin, long pulseTime) {
+    private void pulse(Pulsable pin, long pulseTime) {
         try {
             pin.pulse(pulseTime).get();
             Thread.sleep(OptocouperModel.STOP_PULSE);

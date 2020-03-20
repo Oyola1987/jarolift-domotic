@@ -1,11 +1,7 @@
 package com.jarolift.domotic.model;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.RaspiPin;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class OptocouperModel {
     public final static long LONG_PULSE = 4200;
@@ -16,29 +12,28 @@ public class OptocouperModel {
     private final static int AVAILABLE_CHANNELS = 2;
 
     private int currentChannel = MIN_CHANNEL;
-    private ArrayList<Integer> allChannels = new ArrayList<>();
-    private ArrayList<GpioPinDigitalOutput> pins = new ArrayList<>();
-    private GpioPinDigitalOutput pinUp;
-    private GpioPinDigitalOutput pinDown;
-    private GpioPinDigitalOutput pinStop;
-    private GpioPinDigitalOutput pinChangeChannel;
+    private List<Integer> allChannels = new ArrayList<>();
+    private Pulsable pinUp;
+    private Pulsable pinDown;
+    private Pulsable pinStop;
+    private Pulsable pinChangeChannel;
 
-    public OptocouperModel() {
-        GpioController gpioController = GpioFactory.getInstance();
-        pinDown = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-        pinStop = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_21);
-        pinUp = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22);
-        pinChangeChannel = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25);
+    public OptocouperModel(PulsableFactory pulsableFactory) {
+        pinDown = pulsableFactory.getPinDown();
+        pinStop = pulsableFactory.getPinStop();
+        pinUp = pulsableFactory.getPinUp();
+        pinChangeChannel = pulsableFactory.getPinChangeChannel();
+
         for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
             allChannels.add(i);
         }
     }
 
-    public GpioPinDigitalOutput getPinChangeChannel() {
+    public Pulsable getPinChangeChannel() {
         return pinChangeChannel;
     }
 
-    public GpioPinDigitalOutput getPinStop() {
+    public Pulsable getPinStop() {
         return pinStop;
     }
 
@@ -46,7 +41,7 @@ public class OptocouperModel {
         return currentChannel;
     }
 
-    public GpioPinDigitalOutput getPinByButton(String button) {
+    public Pulsable getPinByButton(String button) {
         if (button.equals("up")){
             return pinUp;
         } else if (button.equals("down")){
@@ -59,7 +54,7 @@ public class OptocouperModel {
         return pinStop;
     }
 
-    public ArrayList<Integer> getArrayChannels(int channel) {
+    public List<Integer> getArrayChannels(int channel) {
         if (channel == 0) {
             return allChannels;
         } else {
