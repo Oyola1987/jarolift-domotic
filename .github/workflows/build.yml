@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: jarolft-jar
-        path: target/jarolift-domotic-*jar
+        path: target/jarolift-domotic-1.0-SNAPSHOT.jar
