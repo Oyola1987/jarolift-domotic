@@ -29,4 +29,4 @@ jobs:
         if: success()
         uses: actions-hub/docker@master
         with:
-          args: push oyola1987/jarolift-domotic:${IMAGE_TAG}
+          args: push oyola/jarolift-domotic:${IMAGE_TAG}
