@@ -11,4 +11,6 @@ FROM frankwolf/rpi-oracle-java8-jdk
 COPY --from=build /tmp/target/jarolift-domotic-1.0.0.jar /home/jarolift-domotic-1.0.0.jar
 WORKDIR /home
 
-CMD apt-get update && apt-get install wiringpi && java -jar jarolift-domotic-1.0.0.jar
+ENTRYPOINT apt-get update && apt-get install wiringpi
+
+CMD ["java", "-jar", "jarolift-domotic-1.0.0.jar"]
