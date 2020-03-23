@@ -20,7 +20,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          GITHUB_REPOSITORY: echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]'
+          GITHUB_REPOSITORY: ("$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
 
       - name: Build image
         if: success()
