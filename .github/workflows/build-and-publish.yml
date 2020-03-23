@@ -30,7 +30,6 @@ jobs:
         name: jarolft-jar
         path: target/jarolift-domotic-1.0-SNAPSHOT.jar
 
-    - uses: actions/upload-artifact@v1
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
