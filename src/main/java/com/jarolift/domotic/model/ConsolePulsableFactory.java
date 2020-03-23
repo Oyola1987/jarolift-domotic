@@ -30,7 +30,7 @@ public class ConsolePulsableFactory implements PulsableFactory {
 
     private Pulsable log(String button) {
         return (duration) -> {
-            System.out.println("button: " + button + " pulsed, " + duration);
+            System.out.println("button [" + button + "] pulsed, " + duration);
             return CompletableFuture.completedFuture(null);
         };
     }

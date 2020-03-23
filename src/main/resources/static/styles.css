@@ -133,7 +133,7 @@ select option {
 
 @media (orientation: landscape) {
     .container {
-        max-width: 70em;
+        max-width: none;
         display: flex;
         justify-content: space-between;
     }

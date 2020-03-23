@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("production")
+@Profile("default")
 public class GpioPulsableFactory implements PulsableFactory {
     private final GpioController gpioController = GpioFactory.getInstance();
 
