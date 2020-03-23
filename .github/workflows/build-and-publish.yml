@@ -23,7 +23,7 @@ jobs:
 
       - name: Build image
         if: success()
-        run: docker build -t oyola1987/jarolift-domotic:${IMAGE_TAG} .
+        run: docker build -t oyola/jarolift-domotic:${IMAGE_TAG} .
 
       - name: Push to docker registry
         if: success()
