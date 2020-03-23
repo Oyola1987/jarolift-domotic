@@ -130,3 +130,19 @@ select option {
     bottom: 0;
     left: 0;
 }
+
+@media (orientation: landscape) {
+    .container {
+        max-width: 70em;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .select, .remote {
+        width: 50vw;
+    }
+
+    .remote img {
+        max-height: calc((var(--vh, 1vh) * 100) - 2rem);
+    }
+}
