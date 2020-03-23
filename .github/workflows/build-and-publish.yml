@@ -20,11 +20,13 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: oyola1987/jarolift-domotic
 
       - name: Build image
         if: success()
-        run: docker build -t oyola1987/jarolift-domotic:${IMAGE_TAG} .
+        run: docker build -t ${GITHUB_REPOSITORY}:${IMAGE_TAG} .
+        env:
+          IMAGE_NAME: oyola1987/jarolift-domotic
+          GITHUB_REPOSITORY: oyola1987/jarolift-domotic
 
       - name: Push to docker registry
         if: success()
