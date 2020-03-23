@@ -23,13 +23,10 @@ jobs:
 
       - name: Build image
         if: success()
-        run: docker build -t ${GITHUB_REPOSITORY}:${IMAGE_TAG} .
-        env:
-          IMAGE_NAME: oyola1987/jarolift-domotic
-          GITHUB_REPOSITORY: oyola1987/jarolift-domotic
+        run: docker build -t oyola1987/jarolift-domotic:${IMAGE_TAG} .
 
       - name: Push to docker registry
         if: success()
         uses: actions-hub/docker@master
         with:
-          args: push ${GITHUB_REPOSITORY}:${IMAGE_TAG}
+          args: push oyola1987/jarolift-domotic:${IMAGE_TAG}
