@@ -25,11 +25,13 @@ const get = (url) => {
     return fetch(url)
         .then(response => {
             console.log(response.url);
-            return response.json()
+            return response.json();
         })
-        .then((data) => console.log(data))
-        .catch((error) => {
-            selector('dev').innerHTML = typeof error === 'object' ? JSON.stringify(error) : error;
+        .then((data) => {
+            console.log(data);
+            if (data.status && data.status !== 200) {
+                selector('dev').innerHTML = JSON.stringify(data, null, 4);
+            }
         });
 };
 
