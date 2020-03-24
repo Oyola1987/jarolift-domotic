@@ -27,7 +27,10 @@ const get = (url) => {
             console.log(response.url);
             return response.json()
         })
-        .then((data) => console.log(data));
+        .then((data) => console.log(data))
+        .catch((error) => {
+            selector('dev').innerHTML = typeof error === 'object' ? JSON.stringify(error) : error;
+        });
 };
 
 const vibrate = () => window.navigator.vibrate && window.navigator.vibrate(10);

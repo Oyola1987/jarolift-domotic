@@ -121,10 +121,9 @@ select option {
 }
 
 .dev {
-    display: none;
     margin: 0;
     padding: 0.3rem 0;
-    background: #ccc;
+    background: yellow;
     position: fixed;
     width: 100%;
     bottom: 0;
