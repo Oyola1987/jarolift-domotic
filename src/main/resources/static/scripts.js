@@ -27,6 +27,9 @@ const get = (url) => {
             console.log(response.url);
             return response.json();
         })
+        .catch((error) => {
+            selector('dev').innerHTML = error;
+        })
         .then((data) => {
             console.log(data);
             if (data.status && data.status !== 200) {
