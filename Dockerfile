@@ -14,8 +14,6 @@ COPY --from=build /tmp/target/jarolift-domotic-1.0.0.jar /home/jarolift-domotic-
 
 WORKDIR /home
 
-ENTRYPOINT dpkg -i wiringpi-latest.deb
-
 EXPOSE 8080
 
-CMD ["java", "-jar", "jarolift-domotic-1.0.0.jar"]
+ENTRYPOINT dpkg -i wiringpi-latest.deb && java -jar jarolift-domotic-1.0.0.jar
