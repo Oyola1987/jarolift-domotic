@@ -19,7 +19,7 @@ WORKDIR /home
 
 EXPOSE 8080
 
-ENTRYPOINT apt update && apt install openjdk-8-jre && dpkg -i wiringpi-latest.deb
+ENTRYPOINT apt update && apt install openjdk-8-jre && dpkg -i wiringpi-latest.deb && java -jar jarolift-domotic-1.0.0.jar
 
-CMD ["java", "-jar", "jarolift-domotic-1.0.0.jar"]
+# CMD ["java", "-jar", "jarolift-domotic-1.0.0.jar"]
 # ENTRYPOINT apt-get update && apt-get install wiringpi && java -jar jarolift-domotic-1.0.0.jar
