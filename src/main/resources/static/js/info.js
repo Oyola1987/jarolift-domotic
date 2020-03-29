@@ -17,5 +17,8 @@ const showMsg = (cls, msg) => {
     }, 2000);
 };
 
+export const showLoading = () => document.body.classList = 'loading';
+export const hideLoading = () => document.body.classList = '';
+
 export const warn = (msg) => showMsg('warn', msg);
 export const error = (msg) => showMsg('error', msg);
