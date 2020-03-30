@@ -1,11 +1,13 @@
 package com.jarolift.domotic.service;
 
-import com.jarolift.domotic.model.*;
+import com.jarolift.domotic.model.OptocouperModel;
+import com.jarolift.domotic.model.Pulsable;
+import com.jarolift.domotic.model.PulsableFactory;
+import com.jarolift.domotic.model.RequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Component
 public class OptocouperService {
@@ -16,16 +18,14 @@ public class OptocouperService {
         optocouperModel = new OptocouperModel(pulsableFactory);
     }
 
-    public void pulseButton(RequestModel requestModel) {
-        Pulsable pin = optocouperModel.getPinByButton(requestModel.getButton());
-
-        pulseByPin(requestModel, pin, OptocouperModel.SHORT_PULSE);
-    }
-
-    public void pulseMiddle(RequestModel requestModel) {
-        Pulsable stopPin = optocouperModel.getPinStop();
-
-        pulseByPin(requestModel, stopPin, OptocouperModel.LONG_PULSE);
+    public void execute(RequestModel requestModel) {
+        if (requestModel.isMiddleButton()) {
+            Pulsable stopPin = optocouperModel.getPinStop();
+            pulseByPin(requestModel, stopPin, OptocouperModel.LONG_PULSE);
+        } else {
+            Pulsable pin = optocouperModel.getPinByButton(requestModel.getButton());
+            pulseByPin(requestModel, pin, OptocouperModel.SHORT_PULSE);
+        }
     }
 
     private void pulseByPin(RequestModel requestModel, Pulsable pin, long pulseTime) {
@@ -34,7 +34,7 @@ public class OptocouperService {
         for (int channel: channels) {
             System.out.println("[PULSE] channel: " + channel + ", button: " + requestModel.getButton());
             selectChannel(channel);
-            pulse(pin, pulseTime);
+            pin.pulse(pulseTime);
         }
 
         selectDefaultChannel();
@@ -54,16 +54,7 @@ public class OptocouperService {
 
     private void increaseChannel() {
         Pulsable changePin = optocouperModel.getPinChangeChannel();
-        pulse(changePin, OptocouperModel.SHORT_PULSE);
+        changePin.pulse(OptocouperModel.SHORT_PULSE);
         optocouperModel.increaseChannel();
-    }
-
-    private void pulse(Pulsable pin, long pulseTime) {
-        try {
-            pin.pulse(pulseTime).get();
-            Thread.sleep(OptocouperModel.STOP_PULSE);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 }

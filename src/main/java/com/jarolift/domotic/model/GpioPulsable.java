@@ -2,17 +2,23 @@ package com.jarolift.domotic.model;
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
-import java.util.concurrent.Future;
-
 public class GpioPulsable implements Pulsable {
     private final GpioPinDigitalOutput gpioPinDigitalOutput;
+    public static final long WAIT_TO_PULSE = 500;
 
     public GpioPulsable(GpioPinDigitalOutput gpioPinDigitalOutput) {
         this.gpioPinDigitalOutput = gpioPinDigitalOutput;
     }
 
     @Override
-    public Future<?> pulse(long time) {
-        return gpioPinDigitalOutput.pulse(time);
+    public void pulse(long time) {
+        try {
+            gpioPinDigitalOutput.high();
+            Thread.sleep(time);
+            gpioPinDigitalOutput.low();
+            Thread.sleep(WAIT_TO_PULSE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
