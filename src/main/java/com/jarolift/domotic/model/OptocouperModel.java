@@ -39,7 +39,7 @@ public class OptocouperModel {
     }
 
     public int getCurrentChannel() {
-        logger.info("[CURRENT CHANNEL] " + currentChannel);
+        // logger.info("[CURRENT CHANNEL] " + currentChannel);
         return currentChannel;
     }
 
