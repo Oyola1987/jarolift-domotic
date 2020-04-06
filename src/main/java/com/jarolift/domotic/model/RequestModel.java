@@ -27,7 +27,7 @@ public class RequestModel {
 
     @JsonIgnore
     public boolean isMiddleButton() {
-        return button == MIDDLE_BUTTON;
+        return button.equals(MIDDLE_BUTTON);
     }
 
     @Override
