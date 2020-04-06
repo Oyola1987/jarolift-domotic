@@ -1,11 +1,11 @@
 package com.jarolift.domotic.model;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OptocouperModel {
-    public final static long LONG_PULSE = 4200;
-    public final static long SHORT_PULSE = 300;
     public final static int MIN_CHANNEL = 1;
     private final static int MAX_CHANNEL = 8;
     private final static int AVAILABLE_CHANNELS = 2;
@@ -16,8 +16,10 @@ public class OptocouperModel {
     private Pulsable pinDown;
     private Pulsable pinStop;
     private Pulsable pinChangeChannel;
+    private Logger logger;
 
     public OptocouperModel(PulsableFactory pulsableFactory) {
+        logger = LogManager.getLogger(OptocouperModel.class);
         pinDown = pulsableFactory.getPinDown();
         pinStop = pulsableFactory.getPinStop();
         pinUp = pulsableFactory.getPinUp();
@@ -37,7 +39,7 @@ public class OptocouperModel {
     }
 
     public int getCurrentChannel() {
-        System.out.println("[CURRENT CHANNEL] " + currentChannel);
+        logger.info("[CURRENT CHANNEL] " + currentChannel);
         return currentChannel;
     }
 
@@ -50,7 +52,7 @@ public class OptocouperModel {
             return pinStop;
         }
 
-        System.out.println("[ERROR] Error '" + button + "' button not valid, using 'STOP' button by default");
+        logger.error("Error '" + button + "' button not valid, using 'STOP' button by default");
         return pinStop;
     }
 
@@ -62,7 +64,7 @@ public class OptocouperModel {
         } else if (allChannels.contains(channel)) {
             channels.add(channel);
         } else {
-            System.out.println("[ERROR] Error channel '" + channel + "' not valid, using channel '1' by default");
+            logger.error("Error channel '" + channel + "' not valid, using channel '1' by default");
             channels.add(MIN_CHANNEL);
         }
 

@@ -1,11 +1,15 @@
 package com.jarolift.domotic.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("local")
 public class ConsolePulsableFactory implements PulsableFactory {
+    private Logger logger = LogManager.getLogger(ConsolePulsableFactory.class);
+
     @Override
     public Pulsable getPinDown() {
         return log("down");
@@ -29,7 +33,7 @@ public class ConsolePulsableFactory implements PulsableFactory {
     private Pulsable log(String button) {
         return (duration) -> {
             try {
-                System.out.println("[DEV] [BUTTON] '" + button + "' pulsed, during: " + duration);
+                logger.warn("[DEV] [BUTTON] '" + button + "' pulsed, during: " + duration);
                 Thread.sleep(duration);
                 Thread.sleep(GpioPulsable.WAIT_TO_PULSE);
             } catch (InterruptedException e) {
