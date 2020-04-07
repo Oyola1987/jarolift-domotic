@@ -13,8 +13,8 @@ import java.util.List;
 
 @Component
 public class OptocouperService {
-    private final static long SHORT_PULSE = 400;
-    private final static long LONG_PULSE = 4200;
+    private final static long SHORT_PULSE = 500;
+    private final static long LONG_PULSE = 4000;
 
     private OptocouperModel optocouperModel;
     private Logger logger;
