@@ -13,7 +13,6 @@ import java.net.URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("local")
 public class ButtonsControllerIT {
     @LocalServerPort
     private int port;
@@ -49,5 +48,12 @@ public class ButtonsControllerIT {
         this.base = new URL("http://localhost:" + port + "/api/middle/channel/1");
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
         assertThat(response.getBody()).isEqualTo("{\"button\":\"middle\",\"channel\":1}");
+    }
+
+    @Test
+    public void pushStopButtonForAllChannels() throws Exception {
+        this.base = new URL("http://localhost:" + port + "/api/button/stop/channel/0");
+        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+        assertThat(response.getBody()).isEqualTo("{\"button\":\"stop\",\"channel\":0}");
     }
 }

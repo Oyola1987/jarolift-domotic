@@ -29,12 +29,4 @@ public class RequestModel {
     public boolean isMiddleButton() {
         return button.equals(MIDDLE_BUTTON);
     }
-
-    @Override
-    public String toString() {
-        return "RequestModel{" +
-                "button='" + button + '\'' +
-                ", channel=" + channel +
-                '}';
-    }
 }
