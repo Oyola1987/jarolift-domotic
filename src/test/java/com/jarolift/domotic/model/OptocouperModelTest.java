@@ -1,20 +1,19 @@
 package com.jarolift.domotic.model;
 
 import com.pi4j.io.gpio.GpioController;
-import org.junit.Assert;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class OptocouperModelTest {
     @Mock
     private GpioController gpioController;
 
-    @org.junit.Test
+    @Test
     public void increaseChannel() {
         OptocouperModel optocouperModel = new OptocouperModel(new ConsolePulsableFactory());
         optocouperModel.increaseChannel();
-        Assert.assertEquals(2,optocouperModel.getCurrentChannel());
+        assertEquals(2, optocouperModel.getCurrentChannel());
     }
 }
