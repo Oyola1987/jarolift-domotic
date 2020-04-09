@@ -2,6 +2,8 @@ package com.jarolift.domotic.model;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class OptocouperModel {
         return currentChannel;
     }
 
-    public Pulsable getPinByButton(String button) {
+    public Pulsable getPinByButton(String button) throws IOException {
         if (button.equals("up")){
             return pinUp;
         } else if (button.equals("down")){
@@ -52,23 +54,19 @@ public class OptocouperModel {
             return pinStop;
         }
 
-        logger.error("Error '" + button + "' button not valid, using 'STOP' button by default");
-        return pinStop;
+        throw new IOException(button + "' button not valid");
     }
 
-    public List<Integer> getArrayChannels(int channel) {
-        List<Integer> channels = new ArrayList<>();
-
+    public List<Integer> getArrayChannels(int channel) throws IOException {
         if (channel == 0) {
-            channels = allChannels;
+            return allChannels;
         } else if (allChannels.contains(channel)) {
+            List<Integer> channels = new ArrayList<>();
             channels.add(channel);
-        } else {
-            logger.error("Error channel '" + channel + "' not valid, using channel '1' by default");
-            channels.add(MIN_CHANNEL);
+            return channels;
         }
 
-        return channels;
+        throw new IOException("Error channel '" + channel + "' not valid");
     }
 
     public void increaseChannel() {

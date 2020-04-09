@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.net.URL;
 
@@ -21,6 +21,20 @@ public class ButtonsControllerIT {
 
     @Autowired
     private TestRestTemplate template;
+
+    @Test
+    public void returnErrorIfChannelIsNotValid() throws Exception {
+        this.base = new URL("http://localhost:" + port + "/api/button/stop/channel/3");
+        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void returnErrorIfButtonIsNotValid() throws Exception {
+        this.base = new URL("http://localhost:" + port + "/api/button/fake/channel/1");
+        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 
     @Test
     public void pushStopButtonChannel1() throws Exception {

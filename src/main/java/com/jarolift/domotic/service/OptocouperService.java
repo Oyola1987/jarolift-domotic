@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -25,7 +26,7 @@ public class OptocouperService {
         logger = LogManager.getLogger(OptocouperService.class);
     }
 
-    public void execute(RequestModel requestModel) {
+    public void execute(RequestModel requestModel) throws IOException {
         if (requestModel.isMiddleButton()) {
             Pulsable stopPin = optocouperModel.getPinStop();
             pulseByPin(requestModel, stopPin, LONG_PULSE);
@@ -35,7 +36,7 @@ public class OptocouperService {
         }
     }
 
-    private void pulseByPin(RequestModel requestModel, Pulsable pin, long pulseTime) {
+    private void pulseByPin(RequestModel requestModel, Pulsable pin, long pulseTime) throws IOException {
         List<Integer> channels = optocouperModel.getArrayChannels(requestModel.getChannel());
 
         for (int channel: channels) {

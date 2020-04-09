@@ -1,7 +1,6 @@
 package com.jarolift.domotic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 public class RequestModel {
     private static final String MIDDLE_BUTTON = "middle";
