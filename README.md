@@ -6,7 +6,7 @@ The service should be able to manage [jarolift electric shutters](https://www.ja
 
 ![proposal diagram](.github/docs/proposal_diagram.png)
 
-### Required
+#### Required
 
 * [Raspberry PI](https://www.raspberrypi.org/)
 * [WiringPI](http://wiringpi.com/) generally installed in distros
@@ -17,9 +17,9 @@ The service should be able to manage [jarolift electric shutters](https://www.ja
 * Electronic Solder
 * 4 LED (optional)
 
-### Circuit diagram
+## Circuit diagram
 
-The GPIO configuration file [GpioPulsableFactory.java](./src/main/java/com/jarolift/domotic/model/GpioPulsableFactory.java). 
+The GPIO configuration file [GpioPulsableFactory.java](./src/main/java/com/jarolift/domotic/model/GpioPulsableFactory.java) 
 
 ![circuit diagram](.github/docs/circuit_diagram_wiringpi.png)
 
@@ -27,7 +27,7 @@ Raspberry PI GPIO Pinout Diagram:
 
 ![gpio wiringpi diagram for raspberry pi](https://pi4j.com/1.2/images/j8header-3b-plus.png)
 
-### Service
+## Service
 
 Java service using spring-boot. There are 2 profiles:
 
