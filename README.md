@@ -4,7 +4,9 @@
 
 The service should be able to manage [jarolift electric shutters](https://www.jarolift.de/rollladenmotoren.html) from any browser within the same network.
 
-![proposal diagram](.github/docs/proposal_diagram.png)
+<p align="center">
+   <img alt="proposal diagram" src="./.github/docs/proposal_diagram.png" />
+</p>
 
 #### Required
 
@@ -21,11 +23,15 @@ The service should be able to manage [jarolift electric shutters](https://www.ja
 
 The GPIO configuration file [GpioPulsableFactory.java](./src/main/java/com/jarolift/domotic/model/GpioPulsableFactory.java) 
 
-![circuit diagram](.github/docs/circuit_diagram_wiringpi.png)
+<p align="center">
+   <img alt="circuit diagram" src="./.github/docs/circuit_diagram_wiringpi.png" />
+</p>
 
 Raspberry PI GPIO Pinout Diagram:
 
-![gpio wiringpi diagram for raspberry pi](https://pi4j.com/1.2/images/j8header-3b-plus.png)
+<p align="center">
+   <img height="600" alt="gpio wiringpi diagram for raspberry pi" src="https://pi4j.com/1.2/images/j8header-3b-plus.png" />
+</p>
 
 ## Service
 
@@ -51,9 +57,11 @@ and adding more options to the `select` HTML tag [index.html](./src/main/resourc
 
 Resources for the browser are in the folder `src/main/resources/static/` and require an updated browser
 
-![browser resource](./.github/docs/browser.png)
+<p align="center">
+   <img alt="browser resource" src="./.github/docs/browser.png" />
+</p>
 
 
-##### Start service with docker in raspberry PI
+### Start service with docker in raspberry PI
 
 `docker run --rm --privileged -p 8080:8080 -ti oyola/jarolift-domotic`
