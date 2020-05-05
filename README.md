@@ -50,12 +50,12 @@ The service is exposed on port 8080 and has the following endpoints::
 The channels can be increased editing the variable `AVAILABLE_CHANNELS` of the file [OptocouperModel.java](./src/main/java/com/jarolift/domotic/model/OptocouperModel.java)
 and adding more options to the `select` HTML tag [index.html](./src/main/resources/static/index.html)
 
-Resources for the browser are in the folder `src/main/resources/static/` and require an updated browser
+Resources for the browser are in the folder `src/main/resources/static/` and require an updated browser.
+The application is available at the URL: http://{SERVICE_IP}:8080 or [http://localhost:8080](http://localhost:8080) if the browser and service are on the same machine
 
 <p align="center">
    <img alt="browser resource" src="./.github/docs/browser.png" />
 </p>
-
 
 ### Start service with docker in raspberry PI
 
