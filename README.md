@@ -22,15 +22,10 @@ The service should be able to manage [jarolift electric shutters](https://www.ja
 ## Circuit diagram
 
 The GPIO configuration file [GpioPulsableFactory.java](./src/main/java/com/jarolift/domotic/model/GpioPulsableFactory.java) 
+and Raspberry PI [GPIO Pinout Diagram](https://pi4j.com/1.2/images/j8header-3b-plus.png) 
 
 <p align="center">
    <img alt="circuit diagram" src="./.github/docs/circuit_diagram_wiringpi.png" />
-</p>
-
-Raspberry PI GPIO Pinout Diagram:
-
-<p align="center">
-   <img height="600" alt="gpio wiringpi diagram for raspberry pi" src="https://pi4j.com/1.2/images/j8header-3b-plus.png" />
 </p>
 
 ## Service
