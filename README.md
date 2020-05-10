@@ -82,6 +82,8 @@ This servide only works in raspberry pi
 </p>
  
 <p align="center">
-     <a href="https://youtu.be/6_NcTPTVSaU"><img src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" alt="Youtube link"></a>
+    <a href="https://youtu.be/6_NcTPTVSaU">
+        <img src="./.github/docs/capture_youtube.png" alt="Youtube link">
+    </a>
 </p>
 
