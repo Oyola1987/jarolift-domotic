@@ -34,7 +34,7 @@ Java service using spring-boot. There are 2 profiles:
 
 * `default` start the service using the library [pi4j](https://pi4j.com/) (only works in raspberry pi)
 
-* `local` start the service showing traces (useful to develop)
+* `local` start the service showing traces (useful to develop `spring-boot:run -Dspring-boot.run.profiles=local`) 
 
 The service is exposed on port 8080 and has the following endpoints::
 
