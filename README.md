@@ -59,4 +59,26 @@ The application is available at the URL: http://{SERVICE_IP}:8080 or [http://loc
 
 ### Start service with docker in raspberry PI
 
+This servide only works in raspberry pi
+This servide only works in raspberry pi
 `docker run --rm --privileged -p 8080:8080 -ti oyola/jarolift-domotic`
+
+## Building
+
+[See in HD](./.github/docs/soldered_remote_fullhd)
+
+<p align="center">
+   <img alt="remote" src="./.github/docs/remote.png" />
+</p>
+
+[See in HD](./.github/docs/soldered_circuit_fullhd.png)
+
+<p align="center">
+   <img alt="remote" src="./.github/docs/soldered_circuit.png" />
+</p>
+
+<p align="center">
+   <img alt="remote" src="./.github/docs/circuit_and_remote.png" />
+</p>
+ 
+
