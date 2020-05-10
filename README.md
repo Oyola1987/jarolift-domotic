@@ -85,7 +85,7 @@ The [docker](https://hub.docker.com/repository/docker/oyola/jarolift-domotic) im
 
 <p align="center">
     <a href="https://youtu.be/6_NcTPTVSaU">
-        <img width="600" src="./.github/docs/capture_youtube.png" alt="Youtube link">
+        <img width="600" src="./.github/docs/capture_youtube.jpg" alt="Youtube link">
     </a>
 </p>
 
