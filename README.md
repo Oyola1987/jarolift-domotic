@@ -60,25 +60,28 @@ The application is available at the URL: http://{SERVICE_IP}:8080 or [http://loc
 ### Start service with docker in raspberry PI
 
 This servide only works in raspberry pi
-This servide only works in raspberry pi
+
 `docker run --rm --privileged -p 8080:8080 -ti oyola/jarolift-domotic`
 
 ## Building
 
-[See in HD](./.github/docs/soldered_remote_fullhd)
-
 <p align="center">
-   <img alt="remote" src="./.github/docs/remote.png" />
-</p>
-
-[See in HD](./.github/docs/soldered_circuit_fullhd.png)
-
-<p align="center">
-   <img alt="remote" src="./.github/docs/soldered_circuit.png" />
+   <a href="./.github/docs/soldered_remote_fullhd.jpg" target="_blank">
+      <img alt="sodeted remote" src="./.github/docs/remote.jpg" />
+   </a>
 </p>
 
 <p align="center">
-   <img alt="remote" src="./.github/docs/circuit_and_remote.png" />
+    <a href="./.github/docs/soldered_circuit_fullhd.jpg" target="_blank">
+      <img alt="soldered circuit" src="./.github/docs/soldered_circuit.jpg" />
+   </a>   
+</p>
+
+<p align="center">
+   <img alt="circuit and remote" src="./.github/docs/circuit_and_remote.jpg" />
 </p>
  
+<p align="center">
+     <a href="https://youtu.be/6_NcTPTVSaU"><img src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" alt="Youtube link"></a>
+</p>
 
