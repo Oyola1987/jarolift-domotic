@@ -5,7 +5,7 @@ let timeout;
 const showMsg = (cls, msg) => {
     const infoCls = 'info';
     const el = selector(infoCls);
-    el.innerHTML = msg;
+    el.innerHTML = typeof msg === 'object' ? JSON.stringify(msg) : msg;
     el.classList = `${infoCls} ${cls}`;
     
     if (timeout) {
@@ -15,6 +15,8 @@ const showMsg = (cls, msg) => {
     timeout = setTimeout(() => {
         el.classList = `${infoCls} ${cls} fadeout`;
     }, 2000);
+
+    return msg;
 };
 
 export const showLoading = () => document.body.classList = 'loading';

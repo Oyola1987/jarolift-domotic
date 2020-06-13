@@ -1,19 +1,17 @@
 import { warn, error, showLoading, hideLoading } from "./info.js";
 
 export const get = (url) => {
-    showLoading();
+    // showLoading();
     return fetch(url)
         .then(response => {
-            if(response.status === 429) {
-                warn('Espere un momento, una ejecución está en curso');
-            } else {
-                console.log(response.url);
-                return response.json();
-            }
+            console.log(response.url);
+            return response.json().then((data) => {
+                return response.status >= 400 ? Promise.reject(data) : Promise.resolve(data);
+            });
         })
         .catch(error)
         .then((data) => {
-            hideLoading();
+            // hideLoading();
             console.log(data);
         });
 };

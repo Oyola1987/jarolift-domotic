@@ -1,8 +1,5 @@
 package com.jarolift.domotic.model;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +15,8 @@ public class OptocouperModel {
     private Pulsable pinDown;
     private Pulsable pinStop;
     private Pulsable pinChangeChannel;
-    private Logger logger;
 
     public OptocouperModel(PulsableFactory pulsableFactory) {
-        logger = LogManager.getLogger(OptocouperModel.class);
         pinDown = pulsableFactory.getPinDown();
         pinStop = pulsableFactory.getPinStop();
         pinUp = pulsableFactory.getPinUp();
@@ -41,7 +36,6 @@ public class OptocouperModel {
     }
 
     public int getCurrentChannel() {
-        // logger.info("[CURRENT CHANNEL] " + currentChannel);
         return currentChannel;
     }
 
@@ -69,9 +63,18 @@ public class OptocouperModel {
         throw new IOException("Error channel '" + channel + "' not valid");
     }
 
+    public void setCurrentChannelFromString(String data) {
+        if(data.matches("[0-9]")) {
+            int channel = Integer.parseInt(data);
+            if(MIN_CHANNEL <= channel && channel <= MAX_CHANNEL) {
+                currentChannel = channel;
+            }
+        }
+    }
+
     public void increaseChannel() {
         currentChannel++;
-        if (currentChannel == (MAX_CHANNEL + 1)) {
+        if (currentChannel > MAX_CHANNEL) {
             currentChannel = MIN_CHANNEL;
         }
     }

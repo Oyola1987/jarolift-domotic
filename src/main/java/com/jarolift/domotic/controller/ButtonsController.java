@@ -1,5 +1,6 @@
 package com.jarolift.domotic.controller;
 
+import com.jarolift.domotic.model.ErrorResponseModel;
 import com.jarolift.domotic.model.RequestModel;
 import com.jarolift.domotic.model.ResponseModel;
 import com.jarolift.domotic.service.OptocouperService;
@@ -20,7 +21,6 @@ import java.io.IOException;
 public class ButtonsController {
     private OptocouperService optocouperService;
     private Logger logger;
-    private boolean executing = false;
 
     @Autowired
     public ButtonsController(OptocouperService optocouperService) {
@@ -30,32 +30,25 @@ public class ButtonsController {
 
     @GetMapping(value = "/api/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pushButton(@RequestHeader(value = "User-Agent") String userAgent, @PathVariable String button, @PathVariable int channel) {
-        return this.response(new RequestModel(button, channel), userAgent);
+        return response(new RequestModel(button, channel, userAgent));
     }
 
     @GetMapping(value = "/api/middle/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity downMiddleButton(@RequestHeader(value = "User-Agent") String userAgent, @PathVariable int channel) {
-        return this.response(new RequestModel(channel), userAgent);
+        return response(new RequestModel(channel, userAgent));
     }
 
-    private ResponseEntity response(RequestModel request, String userAgent) {
+    private ResponseEntity response(RequestModel request) {
         ResponseEntity responseEntity;
-        logger.info("[USER AGENT]: " + userAgent);
 
-        if (executing) {
-            logger.error("Too many request");
-            responseEntity = ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        } else {
-            executing = true;
-            try {
-                optocouperService.execute(request);
-                responseEntity = ResponseEntity.ok(request);
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-                ResponseModel responseModel = new ResponseModel(e.getMessage(), request.getButton(), request.getChannel());
-                responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseModel);
-            }
-            executing = false;
+        try {
+            optocouperService.executeRequest(request);
+            responseEntity = ResponseEntity.ok(new ResponseModel(request.getButton(), request.getChannel()));
+        } catch (IOException e) {
+            logger.error("Error user agent: " + request.getUserAgent());
+            logger.error("Error message: " + e.getMessage());
+            ResponseModel responseModel = new ErrorResponseModel(e.getMessage(), request.getButton(), request.getChannel());
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseModel);
         }
 
         return responseEntity;

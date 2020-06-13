@@ -1,19 +1,19 @@
 package com.jarolift.domotic.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class RequestModel {
     private static final String MIDDLE_BUTTON = "middle";
     private String button;
+    private String userAgent;
     private int channel;
 
-    public RequestModel(String button, int channel) {
+    public RequestModel(String button, int channel, String userAgent) {
         this.button = button;
         this.channel = channel;
+        this.userAgent = userAgent;
     }
 
-    public RequestModel(int channel) {
-        this(MIDDLE_BUTTON, channel);
+    public RequestModel(int channel, String userAgent) {
+        this(MIDDLE_BUTTON, channel, userAgent);
     }
 
     public String getButton() {
@@ -24,8 +24,11 @@ public class RequestModel {
         return channel;
     }
 
-    @JsonIgnore
     public boolean isMiddleButton() {
         return button.equals(MIDDLE_BUTTON);
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 }
