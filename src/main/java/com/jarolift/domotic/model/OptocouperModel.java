@@ -2,6 +2,7 @@ package com.jarolift.domotic.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OptocouperModel {
@@ -48,19 +49,17 @@ public class OptocouperModel {
             return pinStop;
         }
 
-        throw new IOException(button + "' button not valid");
+        throw new IOException("Button '" + button + "' not valid");
     }
 
     public List<Integer> getArrayChannels(int channel) throws IOException {
         if (channel == 0) {
             return allChannels;
         } else if (allChannels.contains(channel)) {
-            List<Integer> channels = new ArrayList<>();
-            channels.add(channel);
-            return channels;
+            return Arrays.asList(channel);
         }
 
-        throw new IOException("Error channel '" + channel + "' not valid");
+        throw new IOException("Channel '" + channel + "' not valid");
     }
 
     public void setCurrentChannelFromString(String data) {

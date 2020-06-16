@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class OptocouperService {
@@ -18,8 +21,9 @@ public class OptocouperService {
     private Logger logger;
     private StorageChannel storageChannel;
     private OptocouperModel optocouperModel;
-    private List<ExecuteModel> pendingRequests = new ArrayList<>();
+    private LinkedList<ExecuteModel> pendingRequests = new LinkedList<>();
     private boolean isExecuting = false;
+    Timer intervalTimer = null;
 
     @Autowired
     public OptocouperService(PulsableFactory pulsableFactory) {
@@ -38,25 +42,47 @@ public class OptocouperService {
         if (isExecuting) {
             pendingRequests.add(executeModel);
         } else {
-            new Thread(() -> {
-                isExecuting = true;
-                execute(executeModel);
+            isExecuting = true;
+            CompletableFuture.runAsync(() -> {
+                executeSync(executeModel);
                 isExecuting = false;
-            }).start();
+            });
         }
     }
 
-    private void execute(ExecuteModel executeModel) {
+    private void setDefaultChannelDelayed() {
+        intervalTimer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                isExecuting = true;
+                intervalTimer.cancel();
+                selectChannel(OptocouperModel.MIN_CHANNEL);
+                executePendings();
+                isExecuting = false;
+            };
+        };
+        intervalTimer.schedule(task, 60000L );
+    }
+
+    private void executeSync(ExecuteModel executeModel) {
+        if(intervalTimer != null) {
+            intervalTimer.cancel();
+            intervalTimer = null;
+        }
+
         pulseByPin(executeModel);
 
         if (pendingRequests.size() == 0) {
-            selectChannel(OptocouperModel.MIN_CHANNEL);
+            setDefaultChannelDelayed();
         }
 
+        executePendings();
+    }
+
+    private void executePendings() {
         if (pendingRequests.size() > 0) {
-            ExecuteModel nextExecuteModel = pendingRequests.get(0);
-            pendingRequests.remove(0);
-            execute(nextExecuteModel);
+            executeSync(pendingRequests.pollFirst());
         }
     }
 
