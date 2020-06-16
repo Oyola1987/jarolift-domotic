@@ -47,7 +47,7 @@ public class ButtonsController {
         } catch (IOException e) {
             logger.error("Error user agent: " + request.getUserAgent());
             logger.error("Error message: " + e.getMessage());
-            ResponseModel responseModel = new ErrorResponseModel(e.getMessage(), request.getButton(), request.getChannel());
+            ErrorResponseModel responseModel = new ErrorResponseModel(e.getMessage(), request.getButton(), request.getChannel());
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseModel);
         }
 
