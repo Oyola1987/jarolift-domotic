@@ -2,20 +2,18 @@ package com.jarolift.domotic.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+@Component
 public class StorageChannel {
     private final static String FILEPATH = "./tmp/channel.txt";
     private final static File file = new File(FILEPATH);
-    private Logger logger;
-
-    public StorageChannel() {
-        logger = LogManager.getLogger(StorageChannel.class);
-    }
+    private static Logger logger = LogManager.getLogger(StorageChannel.class);
 
     public void writeChannel(int channel) {
         try {

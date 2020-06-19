@@ -1,11 +1,17 @@
 package com.jarolift.domotic.model;
 
+import com.jarolift.domotic.service.StorageChannel;
+import org.apache.catalina.Store;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OptocouperModel {
+@Component
+public class OptocouplerModel {
     public final static int MIN_CHANNEL = 1;
     private final static int MAX_CHANNEL = 8;
     private final static int AVAILABLE_CHANNELS = 2;
@@ -17,7 +23,8 @@ public class OptocouperModel {
     private Pulsable pinStop;
     private Pulsable pinChangeChannel;
 
-    public OptocouperModel(PulsableFactory pulsableFactory) {
+    @Autowired
+    public OptocouplerModel(PulsableFactory pulsableFactory, StorageChannel storageChannel) {
         pinDown = pulsableFactory.getPinDown();
         pinStop = pulsableFactory.getPinStop();
         pinUp = pulsableFactory.getPinUp();
@@ -26,6 +33,8 @@ public class OptocouperModel {
         for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
             allChannels.add(i);
         }
+
+        setCurrentChannelFromString(storageChannel.readChannel());
     }
 
     public Pulsable getPinChangeChannel() {

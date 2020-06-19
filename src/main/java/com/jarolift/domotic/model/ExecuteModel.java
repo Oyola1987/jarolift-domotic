@@ -1,14 +1,16 @@
 package com.jarolift.domotic.model;
 
+import com.jarolift.domotic.service.PulseDuration;
+
 import java.util.List;
 
 public class ExecuteModel {
     private Pulsable pin;
     private List<Integer> channels;
-    private long time;
+    private PulseDuration time;
     RequestModel requestModel;
 
-    public ExecuteModel(Pulsable pin, List<Integer> channels, long time, RequestModel requestModel) {
+    public ExecuteModel(Pulsable pin, List<Integer> channels, PulseDuration time, RequestModel requestModel) {
         this.pin = pin;
         this.channels = channels;
         this.time = time;
@@ -23,7 +25,7 @@ public class ExecuteModel {
         return channels;
     }
 
-    public long getTime() {
+    public PulseDuration getTime() {
         return time;
     }
 

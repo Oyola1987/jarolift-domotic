@@ -3,7 +3,7 @@ package com.jarolift.domotic.controller;
 import com.jarolift.domotic.model.ErrorResponseModel;
 import com.jarolift.domotic.model.RequestModel;
 import com.jarolift.domotic.model.ResponseModel;
-import com.jarolift.domotic.service.OptocouperService;
+import com.jarolift.domotic.service.ActionQueuer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,12 @@ import java.io.IOException;
 
 @RestController
 public class ButtonsController {
-    private OptocouperService optocouperService;
-    private Logger logger;
+    private ActionQueuer actionQueuer;
+    private static Logger logger = LogManager.getLogger(ButtonsController.class);
 
     @Autowired
-    public ButtonsController(OptocouperService optocouperService) {
-        logger = LogManager.getLogger(ButtonsController.class);
-        this.optocouperService = optocouperService;
+    public ButtonsController(ActionQueuer actionQueuer) {
+        this.actionQueuer = actionQueuer;
     }
 
     @GetMapping(value = "/api/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,7 +41,7 @@ public class ButtonsController {
         ResponseEntity responseEntity;
 
         try {
-            optocouperService.executeRequest(request);
+            actionQueuer.executeRequest(request);
             responseEntity = ResponseEntity.ok(new ResponseModel(request.getButton(), request.getChannel()));
         } catch (IOException e) {
             logger.error("Error user agent: " + request.getUserAgent());
