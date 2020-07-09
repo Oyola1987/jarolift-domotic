@@ -3,3 +3,4 @@ target
 *.iml
 logs
 tmp
+bin_esp32
