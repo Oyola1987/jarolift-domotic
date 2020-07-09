@@ -4,7 +4,7 @@ WORKDIR /tmp/
 COPY src src
 COPY pom.xml pom.xml
 
-RUN mvn clean package -DskipTests=true
+RUN mvn clean package -DskipTests=false
 
 FROM oyola/raspberry-pi4-debian-openjdk-8-jre:latest
 
