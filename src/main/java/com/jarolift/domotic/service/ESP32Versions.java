@@ -9,6 +9,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -17,14 +18,14 @@ public class ESP32Versions {
     private static final String NO_FILES = "No 'bin' files";
     private final static String FOLDER_PATH = "./bin_esp32";
     private static Logger logger = LogManager.getLogger(ESP32Versions.class);
-    File dir = new File(FOLDER_PATH);
+    File rootDir = new File(FOLDER_PATH);
 
     public ESP32Versions() {
-        ensureFolder();
+        ensureRootFolder();
     }
 
     public ByteArrayResource getLastFile(String userAgent) {
-        File file = getLatestFile();
+        File file = getLatestFile(userAgent);
         String version = file != null ? file.getName() : NO_FILES;
         logger.info("[USER AGENT]: " + userAgent);
         logger.info("[LAST VERSION]: " + version);
@@ -45,25 +46,39 @@ public class ESP32Versions {
     }
 
     public String getLastVersion(String userAgent) {
-        File file = getLatestFile();
+        File file = getLatestFile(userAgent);
         String version = file != null ? file.getName() : NO_FILES;
         logger.info("[USER AGENT]: " + userAgent);
         logger.info("[LAST VERSION]: " + version);
         return file == null ? null : version;
     }
 
-    private File getLatestFile() {
-        ensureFolder();
-        File [] binFiles = dir.listFiles((dir, name) -> name.endsWith(".bin"));
+    private String normalizeUserAgent(String userAgent) {
+        return Normalizer
+                .normalize(userAgent, Normalizer.Form.NFD)
+                .toLowerCase()
+                .replaceAll("\\s+", "_")
+                .replaceAll("[^a-zA-Z0-9_]", "");
+    }
+
+    private File getLatestFile(String userAgent) {
+        ensureRootFolder();
+        File subDirectory = new File(rootDir, normalizeUserAgent(userAgent));
+        ensureFolder(subDirectory);
+        File [] binFiles = subDirectory.listFiles((dir, name) -> name.endsWith(".bin"));
 
         Arrays.sort(binFiles, Collections.reverseOrder());
 
         return binFiles.length > 0 ? binFiles[0] : null;
     }
 
-    private void ensureFolder() {
-        if (!dir.exists()) {
-            dir.mkdir();
+    private void ensureRootFolder() {
+        ensureFolder(rootDir);
+    }
+
+    private void ensureFolder(File file) {
+        if (!file.exists()) {
+            file.mkdir();
         }
     }
 }
