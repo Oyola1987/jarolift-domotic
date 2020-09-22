@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class OptocouplerHandler {
     private OptocouplerModel optocouplerModel;
-    private StorageChannel storageChannel;
 
     @Autowired
-    public OptocouplerHandler(OptocouplerModel optocouplerModel, StorageChannel storageChannel) {
+    public OptocouplerHandler(OptocouplerModel optocouplerModel) {
         this.optocouplerModel = optocouplerModel;
-        this.storageChannel = storageChannel;
     }
 
     public void selectDefaultChannel() {
@@ -30,6 +28,5 @@ public class OptocouplerHandler {
         Pulsable changePin = optocouplerModel.getPinChangeChannel();
         changePin.pulse(PulseDuration.SHORT_PULSE);
         optocouplerModel.increaseChannel();
-        storageChannel.writeChannel(optocouplerModel.getCurrentChannel());
     }
 }

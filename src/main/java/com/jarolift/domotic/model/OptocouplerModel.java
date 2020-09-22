@@ -1,7 +1,5 @@
 package com.jarolift.domotic.model;
 
-import com.jarolift.domotic.service.StorageChannel;
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +16,14 @@ public class OptocouplerModel {
 
     private int currentChannel = MIN_CHANNEL;
     private List<Integer> allChannels = new ArrayList<>();
+    private List<BlindState> blinds = new ArrayList<>();
     private Pulsable pinUp;
     private Pulsable pinDown;
     private Pulsable pinStop;
     private Pulsable pinChangeChannel;
 
     @Autowired
-    public OptocouplerModel(PulsableFactory pulsableFactory, StorageChannel storageChannel) {
+    public OptocouplerModel(PulsableFactory pulsableFactory) {
         pinDown = pulsableFactory.getPinDown();
         pinStop = pulsableFactory.getPinStop();
         pinUp = pulsableFactory.getPinUp();
@@ -32,9 +31,8 @@ public class OptocouplerModel {
 
         for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
             allChannels.add(i);
+            blinds.add(new BlindState(i));
         }
-
-        setCurrentChannelFromString(storageChannel.readChannel());
     }
 
     public Pulsable getPinChangeChannel() {
@@ -71,19 +69,14 @@ public class OptocouplerModel {
         throw new IOException("Channel '" + channel + "' not valid");
     }
 
-    public void setCurrentChannelFromString(String data) {
-        if(data.matches("[0-9]")) {
-            int channel = Integer.parseInt(data);
-            if(MIN_CHANNEL <= channel && channel <= MAX_CHANNEL) {
-                currentChannel = channel;
-            }
-        }
-    }
-
     public void increaseChannel() {
         currentChannel++;
         if (currentChannel > MAX_CHANNEL) {
             currentChannel = MIN_CHANNEL;
         }
+    }
+
+    public List<BlindState> getBlinds() {
+        return blinds;
     }
 }

@@ -27,6 +27,11 @@ public class ButtonsController {
         this.actionQueuer = actionQueuer;
     }
 
+    @GetMapping(value = "/api/blinds", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getBlinds() {
+        return null;
+    }
+
     @GetMapping(value = "/api/button/{button}/channel/{channel}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity pushButton(@RequestHeader(value = "User-Agent") String userAgent, @PathVariable String button, @PathVariable int channel) {
         return response(new RequestModel(button, channel, userAgent));
