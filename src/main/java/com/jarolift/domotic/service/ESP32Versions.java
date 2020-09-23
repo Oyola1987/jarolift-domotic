@@ -48,8 +48,6 @@ public class ESP32Versions {
     public String getLastVersion(String userAgent) {
         File file = getLatestFile(userAgent);
         String version = file != null ? file.getName() : NO_FILES;
-        logger.info("[USER AGENT]: " + userAgent);
-        logger.info("[LAST VERSION]: " + version);
         return file == null ? null : version;
     }
 

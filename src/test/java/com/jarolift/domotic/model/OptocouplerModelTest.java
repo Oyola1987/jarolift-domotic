@@ -1,6 +1,5 @@
 package com.jarolift.domotic.model;
 
-import com.jarolift.domotic.service.StorageChannel;
 import com.pi4j.io.gpio.GpioController;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,7 +12,7 @@ public class OptocouplerModelTest {
 
     @Test
     public void increaseChannel() {
-        OptocouplerModel optocouplerModel = new OptocouplerModel(new ConsolePulsableFactory(), new StorageChannel());
+        OptocouplerModel optocouplerModel = new OptocouplerModel(new ConsolePulsableFactory());
         optocouplerModel.increaseChannel();
         assertEquals(2, optocouplerModel.getCurrentChannel());
     }
