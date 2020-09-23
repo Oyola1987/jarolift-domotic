@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,11 +11,9 @@ import java.util.List;
 public class OptocouplerModel {
     public final static int MIN_CHANNEL = 1;
     private final static int MAX_CHANNEL = 8;
-    private final static int AVAILABLE_CHANNELS = 2;
 
     private int currentChannel = MIN_CHANNEL;
-    private List<Integer> allChannels = new ArrayList<>();
-    private List<BlindState> blinds = new ArrayList<>();
+    private BlindsModel blinds = new BlindsModel();
     private Pulsable pinUp;
     private Pulsable pinDown;
     private Pulsable pinStop;
@@ -28,11 +25,6 @@ public class OptocouplerModel {
         pinStop = pulsableFactory.getPinStop();
         pinUp = pulsableFactory.getPinUp();
         pinChangeChannel = pulsableFactory.getPinChangeChannel();
-
-        for (int i = MIN_CHANNEL; i <= AVAILABLE_CHANNELS; i++) {
-            allChannels.add(i);
-            blinds.add(new BlindState(i));
-        }
     }
 
     public Pulsable getPinChangeChannel() {
@@ -61,8 +53,8 @@ public class OptocouplerModel {
 
     public List<Integer> getArrayChannels(int channel) throws IOException {
         if (channel == 0) {
-            return allChannels;
-        } else if (allChannels.contains(channel)) {
+            return blinds.getAllChannels();
+        } else if (blinds.validateChannel(channel)) {
             return Arrays.asList(channel);
         }
 
@@ -74,9 +66,5 @@ public class OptocouplerModel {
         if (currentChannel > MAX_CHANNEL) {
             currentChannel = MIN_CHANNEL;
         }
-    }
-
-    public List<BlindState> getBlinds() {
-        return blinds;
     }
 }

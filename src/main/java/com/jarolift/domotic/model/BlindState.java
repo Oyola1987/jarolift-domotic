@@ -1,28 +1,28 @@
 package com.jarolift.domotic.model;
 
+
 public class BlindState {
-    private static int INITIAL_STATE = 100;
     private int percentage;
     private int channel;
+    private float seconds;
+    private String name;
 
-    public BlindState(int channel) {
-        this.percentage = INITIAL_STATE;
+    public BlindState(String name, int channel, int percentage, float seconds) {
+        this.percentage = percentage;
         this.channel = channel;
+        this.seconds = seconds;
+        this.name = name;
     }
 
     public int getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
     public int getChannel() {
         return channel;
     }
 
-    public void setChannel(int channel) {
-        this.channel = channel;
+    public String getName() {
+        return name;
     }
 }
