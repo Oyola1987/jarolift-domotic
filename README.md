@@ -59,7 +59,7 @@ The application is available at the URL: http://{SERVICE_IP}:8080 or [http://loc
 
 ### Start service with docker in raspberry PI
 
-The [docker](https://hub.docker.com/repository/docker/oyola/jarolift-domotic) image. This service only works in raspberry pi
+The [docker](https://hub.docker.com/r/oyola/jarolift-domotic) image. This service only works in raspberry pi
 
 `docker run --rm --privileged -p 8080:8080 -ti oyola/jarolift-domotic`
 
