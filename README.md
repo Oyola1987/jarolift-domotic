@@ -47,7 +47,7 @@ The service is exposed on port 8080 and has the following endpoints::
     
 `The channel 0 corresponds to ALL channels.`
  
-The channels can be increased editing the variable `AVAILABLE_CHANNELS` of the file [OptocouperModel.java](./src/main/java/com/jarolift/domotic/model/OptocouperModel.java)
+The channels can be increased editing the variable `AVAILABLE_CHANNELS` of the file [OptocouplerModel.java](./src/main/java/com/jarolift/domotic/model/OptocouplerModel.java)
 and adding more options to the `select` HTML tag [index.html](./src/main/resources/static/index.html)
 
 Resources for the browser are in the folder `src/main/resources/static/` and require an updated browser.
