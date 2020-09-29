@@ -36,16 +36,22 @@ Java service using spring-boot. There are 2 profiles:
 
 * `local` start the service showing traces (useful to develop `spring-boot:run -Dspring-boot.run.profiles=local`) 
 
-The service is exposed on port 8080 and has the following endpoints::
+The service is exposed on port 8080 and has the following endpoints:
 
 * `/api/button/{button}/channel/{channel}` basic functions to manage the electric blinds
     * button (top|stop|down)
-    * channel (0|1|2)
+    * channel (0|1|2) `The channel 0 corresponds to ALL channels.`
 
 * `/api/middle/channel/{channel}` It is a special function of the remote control that allows to establish the third stop point, for that the stop button must be pressed for 4 seconds
-    * channel (0|1|2)
-    
-`The channel 0 corresponds to ALL channels.`
+    * channel (0|1|2) `The channel 0 corresponds to ALL channels.`
+
+This ESP32 APIs it's only useful for [esp32 blinds](https://github.com/oyola0/esp32-blinds-control) controller. `User Agent required`
+
+* `/api/esp32/version` Returns the latest version available or null
+
+* `/api/esp32/update` Returns the latest version of the binary file
+
+* `/api/esp32/low-battery` Send an email to advise that the battery level is low
  
 The channels can be increased editing the variable `AVAILABLE_CHANNELS` of the file [OptocouplerModel.java](./src/main/java/com/jarolift/domotic/model/OptocouplerModel.java)
 and adding more options to the `select` HTML tag [index.html](./src/main/resources/static/index.html)
