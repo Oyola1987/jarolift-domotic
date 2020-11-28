@@ -1,6 +1,5 @@
 package com.jarolift.domotic.model;
 
-import com.jarolift.domotic.service.PulseDuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Profile;
@@ -32,11 +31,11 @@ public class ConsolePulsableFactory implements PulsableFactory {
     }
 
     private Pulsable log(String button) {
-        return (duration) -> {
+        return (durationDown, durationUp) -> {
             try {
-                logger.warn("[DEV] [BUTTON] '" + button + "' pulsed, during: " + duration.duration);
-                Thread.sleep(duration.duration);
-                Thread.sleep(PulseDuration.SHORT_PULSE.duration);
+                logger.warn("[DEV] [BUTTON] '" + button + "' pulsed, duringDown: " + durationDown.duration + ", duringUp: " + durationDown.duration);
+                Thread.sleep(durationDown.duration);
+                Thread.sleep(durationUp.duration);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

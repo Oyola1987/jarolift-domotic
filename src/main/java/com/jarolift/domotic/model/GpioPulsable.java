@@ -11,12 +11,12 @@ public class GpioPulsable implements Pulsable {
     }
 
     @Override
-    public void pulse(PulseDuration time) {
+    public void pulse(PulseDuration durationDown, PulseDuration durationUp) {
         try {
             gpioPinDigitalOutput.high();
-            Thread.sleep(time.duration);
+            Thread.sleep(durationDown.duration);
             gpioPinDigitalOutput.low();
-            Thread.sleep(PulseDuration.SHORT_PULSE.duration);
+            Thread.sleep(durationUp.duration);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

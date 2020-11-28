@@ -24,7 +24,7 @@ class ExecutePulse implements Action {
             logger.info("[USER AGENT]: " + executeModel.getRequestModel().getUserAgent());
             logger.info("[PULSE] channel: " + channel + ", button: " + executeModel.getRequestModel().getButton());
             optocouplerHandler.selectChannel(channel);
-            executeModel.getPin().pulse(executeModel.getTime());
+            executeModel.getPin().pulse(executeModel.getDurationDown(), executeModel.getDurationUp());
         }
     }
 }

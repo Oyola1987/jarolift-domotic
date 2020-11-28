@@ -7,13 +7,15 @@ import java.util.List;
 public class ExecuteModel {
     private Pulsable pin;
     private List<Integer> channels;
-    private PulseDuration time;
+    private PulseDuration durationDown;
+    private PulseDuration durationUp;
     RequestModel requestModel;
 
-    public ExecuteModel(Pulsable pin, List<Integer> channels, PulseDuration time, RequestModel requestModel) {
+    public ExecuteModel(Pulsable pin, List<Integer> channels, PulseDuration durationDown, PulseDuration durationUp, RequestModel requestModel) {
         this.pin = pin;
         this.channels = channels;
-        this.time = time;
+        this.durationDown = durationDown;
+        this.durationUp = durationUp;
         this.requestModel = requestModel;
     }
 
@@ -25,8 +27,12 @@ public class ExecuteModel {
         return channels;
     }
 
-    public PulseDuration getTime() {
-        return time;
+    public PulseDuration getDurationDown() {
+        return durationDown;
+    }
+
+    public PulseDuration getDurationUp() {
+        return durationUp;
     }
 
     public RequestModel getRequestModel() {

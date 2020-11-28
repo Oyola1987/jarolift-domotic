@@ -26,7 +26,7 @@ public class OptocouplerHandler {
 
     private void increaseChannel() {
         Pulsable changePin = optocouplerModel.getPinChangeChannel();
-        changePin.pulse(PulseDuration.SHORT_PULSE);
+        changePin.pulse(PulseDuration.CHANGE_CHANNEL, PulseDuration.CHANGE_CHANNEL);
         optocouplerModel.increaseChannel();
     }
 }

@@ -23,8 +23,8 @@ public class ActionQueuer {
     public void executeRequest(RequestModel requestModel) throws IOException {
         List<Integer> channels = optocouplerModel.getArrayChannels(requestModel.getChannel());
         Pulsable pin = requestModel.isMiddleButton() ? optocouplerModel.getPinStop() : optocouplerModel.getPinByButton(requestModel.getButton());
-        PulseDuration time = requestModel.isMiddleButton() ? PulseDuration.LONG_PULSE : PulseDuration.SHORT_PULSE;
-        ExecuteModel executeModel = new ExecuteModel(pin, channels, time, requestModel);
+        PulseDuration duration = requestModel.isMiddleButton() ? PulseDuration.LONG_PULSE : PulseDuration.SHORT_PULSE;
+        ExecuteModel executeModel = new ExecuteModel(pin, channels, duration, PulseDuration.SHORT_PULSE, requestModel);
 
         Action executePulse = new ExecutePulse(executeModel, optocouplerHandler);
         actionRunner.add(executePulse);
